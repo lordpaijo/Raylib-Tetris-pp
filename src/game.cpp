@@ -2,7 +2,6 @@
 #include "grid.cpp"
 #include "../include/position.h"
 #include "../include/raylib.h"
-#include <cstdlib>
 #include <vector>
 
 Game::Game(){
@@ -12,6 +11,7 @@ Game::Game(){
   nextBlock = GetRandomBlock();
   gameOver = false;
   score = 0;
+  highScore = score;
   InitAudioDevice();
   music = LoadMusicStream("../sounds/tetris.mp3");
   rotateSound = LoadSound("../sounds/rotate.mp3");
@@ -45,9 +45,9 @@ void Game::Draw(){
   grid.Draw();
   currentBlock.Draw(11,11);
   switch (nextBlock.id) {
-    case 3:   nextBlock.Draw(398 - 11, 282 + 20);       break;
-    case 4:   nextBlock.Draw(398 - 15, 285);            break;
-    default:  nextBlock.Draw(398, 285);                 break;
+    case 3:   nextBlock.Draw(388 - 11, 420 + 20);       break;
+    case 4:   nextBlock.Draw(388 - 15, 423);            break;
+    default:  nextBlock.Draw(388, 420);                 break;
   }
 }
 
@@ -62,13 +62,14 @@ void Game::HandleInput(){
     case KEY_A:
     MoveBlockLeft();
     break;
-    
+
     case KEY_RIGHT:
     case KEY_D:
     MoveBlockRight();
     break;
 
     case KEY_DOWN:
+    case KEY_SPACE:
     case KEY_S:
     MoveBlockDown();
     UpdateScore(0,1);
@@ -77,6 +78,10 @@ void Game::HandleInput(){
     case KEY_UP:
     case KEY_R:
     RotateBlock();
+    break;
+
+    case KEY_BACKSPACE:
+    Reset();
     break;
   }
 }
@@ -156,6 +161,7 @@ void Game::Reset(){
   blocks = GetAllBlocks();
   currentBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
+  if (highScore < score) highScore = score;
   score = 0;
 }
 
