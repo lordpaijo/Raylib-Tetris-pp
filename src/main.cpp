@@ -2,7 +2,7 @@
 #include "../include/raylib.h"
 #include "game.cpp"
 #include <cstdio>
-#include <iostream>
+
 
 Color Suface0 = Color{48, 52, 70, 255};
 double lastUpdateTime = 0;
@@ -36,19 +36,26 @@ int main()
     BeginDrawing();
     ClearBackground(BaseC);
 
-    DrawTextEx(font, "Score", {570,15}, 38, 2, WHITE);
-    DrawTextEx(font, "Next", {575,175}, 38, 2, WHITE);
-    if (game.gameOver) DrawTextEx(font, "GAME OVER", {560,485}, 40, 2, RED);
+    DrawTextEx(font, "Score", {560,15}, 38, 2, WHITE);
+    DrawTextEx(font, "High Score", {560,160}, 38, 2, WHITE);
+    DrawTextEx(font, "Next", {560,315}, 38, 2, WHITE);
+    if (game.gameOver) DrawTextEx(font, "GAME\nOVER", {560,565}, 40, 2, RED);
 
     char scoreText[10];
     sprintf(scoreText,"%d", game.score);
-    Vector2 textSize = MeasureTextEx(font, scoreText, 38, 2);
 
-    DrawTextEx(font, "Game by\nLordPaijo\n\nOn\ngithub.com/ \nberakpaijo", {570,screenHeight-200}, 28, 2, WHITE);
-    DrawRectangleRounded({575, 65, 150, 60}, 0.3, 6, frappe.FrappeSurface0);
-    DrawTextEx(font, scoreText, {570 + (170 - textSize.x)/2,75}, 38, 2, WHITE);
-    DrawRectangleRounded({570, 225, 170, 180}, 0.3, 6, frappe.FrappeSurface1);
-    
+    char highScoreText[10];
+    sprintf(highScoreText,"%d", game.highScore);
+
+    Vector2 scoreSize = MeasureTextEx(font, scoreText, 38, 2);
+
+    DrawTextEx(font, "Game by\nLordPaijo\n\nOn\ngithub.com/ \nlordpaijo", {565,screenHeight-200}, 28, 2, WHITE);
+    DrawRectangleRounded({560, 65, 140, 60}, 0.3, 6, frappe.FrappeSurface0);
+    DrawTextEx(font, scoreText, {540 + (170 - scoreSize.x)/2,75}, 38, 2, WHITE);
+    DrawRectangleRounded({560, 215, 140, 60}, 0.3, 6, frappe.FrappeSurface0);
+    DrawTextEx(font, highScoreText, {540 + (170 - scoreSize.x)/2, 225}, 38, 2, WHITE);
+    DrawRectangleRounded({560, 360, 170, 180}, 0.3, 6, frappe.FrappeSurface1);
+
     game.Draw();
 
     EndDrawing();

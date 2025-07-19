@@ -14,6 +14,7 @@ class Game{
   void MoveBlockDown();
   bool gameOver;
   int score;
+  int highScore;
   Music music;
 
   private:
